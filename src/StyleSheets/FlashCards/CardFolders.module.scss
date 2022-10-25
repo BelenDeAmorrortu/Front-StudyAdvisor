@@ -1,0 +1,22 @@
+@import '../Variables';
+
+.cardFolders_container{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10vh;
+
+    .cardGroups_display{
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        @media screen and (max-width: $phone) {
+            
+            flex-direction: column;
+        }
+    }
+}

@@ -1,0 +1,47 @@
+@import '../Variables';
+
+.cards_container{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10vh 0;
+
+    .button{
+
+        width: 88%;
+        height: 4vh;
+        box-shadow: 0 4px 8px 1px rgba(0, 0, 0, 0.184);
+        border: none;
+        background-color: $cream;
+        margin-top: 4vh;
+        transition: color 0.5s;
+
+        &:hover{
+            color: $orange;
+        }
+    }
+
+    h2{
+        padding-top: 5vh;
+        font-size: 2.5vw;
+
+        @media screen and (max-width: $phone) {
+            
+            font-size: 8vw;
+        }
+    }
+
+    div{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .message{
+        font-size: 1.5vw;
+        opacity: 0.8;
+        margin: 2vw;
+    }
+}

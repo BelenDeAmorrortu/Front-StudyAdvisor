@@ -1,0 +1,40 @@
+
+// Colors -----------------------------------------
+
+$light-blue: #42a2eb;
+$purple:  #6e44ff;
+$pink: #b33c86;
+$orange: #DC7F30;
+// $cream: #e3dae0;
+$cream: #f5f2f3;
+
+$light-blue-hover: #42a2eb9d;
+$purple-hover:  #6e44ff9d;
+$pink-hover: #b33c869d;
+$orange-hover: #DC7F309d;
+$orange-hover-dark: #de7417;
+// $cream-hover: #e3dae09d;
+$cream-hover-light: #f5f2f375;
+$cream-hover-dark: #e4dddd;
+
+
+// Media Queries ----------------------------------
+
+$phone: 450px;
+$mid-screen: 800px;
+
+// Fonts ------------------------------------------
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Raleway:wght@300;600&display=swap');
+
+$heading-font:  'Raleway', sans-serif;
+$heading-weight: 600;
+
+$subheading-font: 'Libre Baskerville', serif;
+$subheading-weight: 700;
+
+$text-font: 'Raleway', sans-serif;
+$text-weight: 300;
+
+
+

@@ -1,0 +1,102 @@
+
+@import '../Variables';
+
+.nav {
+
+    width: 100vw;
+    height: 8vh;
+
+    display: flex;
+    justify-content: flex-end ;
+    align-items: center;
+
+    background-color: $light-blue;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;   
+
+
+    img{
+    
+        height: 90%;
+        margin: 0.5vh 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+
+
+        @media screen and (max-width: $mid-screen){
+
+            height: 60%;
+            margin: 1.5vh 0;
+            
+        }
+    
+    }
+
+    li {
+
+        display: inline;
+        margin: 0 5vw;
+        padding: 0.5vh 0;
+        font-size: 1.8vw;
+        text-decoration: none;
+        text-align: center;
+        color: white;
+
+        @media screen and (max-width: $mid-screen){
+
+            font-size: 3vw;
+            
+        }
+        
+    }
+
+}
+/* #nav_options_icon {
+
+    position: fixed;
+
+    height: 3.5vh;
+
+    right: 4vh;
+    top: 0.3vh;
+
+    z-index: 50;
+
+} */
+
+
+
+
+
+/* #ul_responsive {
+
+    display: block;
+    padding: 5vh;
+    z-index: 48;
+
+}
+
+#div_ul_responsive{
+
+    position: fixed;
+
+
+    top: -150%;
+    z-index: 47;
+
+    background-color: #42a2eb;
+
+}
+
+.open {
+    
+    width: 100vw;
+    height: 100vh;
+
+    top:0;
+} */
+
+
