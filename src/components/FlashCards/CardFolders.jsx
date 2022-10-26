@@ -6,7 +6,7 @@ import FormFolder from './FormFolder'
 import style from '../../StyleSheets/FlashCards/CardFolders.module.scss'
 import FormSvg from '../../images/undraw_my_files_swob.svg'
 import { useEffect } from 'react'
-import { getCardGroups, deleteCardGroup } from '../../actions'
+import { getCardGroups, deleteCardGroup } from '../../redux/actions'
 import Card from '../Permanent/Card'
 import folderPng from '../../images/folder.png'
 

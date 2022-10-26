@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { deleteFlashCard, getFlashCards } from '../../actions'
+import { deleteFlashCard, getFlashCards } from '../../redux/actions'
 import style from '../../StyleSheets/FlashCards/FlashCard.module.scss'
 
 export default function Card({id, question, options, answer, display}) {

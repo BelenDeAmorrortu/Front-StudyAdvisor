@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { createFlashCard, getFlashCards } from '../../actions'
+import { createFlashCard, getFlashCards } from '../../redux/actions'
 import style from '../../StyleSheets/FlashCards/FormCard.module.scss'
 
 export default function FormCard({setInput, input, groupId, setDisplay}) {

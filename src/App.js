@@ -11,30 +11,30 @@ import FlashCards from './components/FlashCards/FlashCards';
 import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
-  
-  return (
+    
+    return (
 
-    <AuthProvider>
-      
-      <div className="App">
+        <AuthProvider>
         
-        <Nav />
-        <Routes>
+            <div className="App">
+                
+                <Nav />
+                <Routes>
 
-          <Route exact path='/' element={ <Home />} />
-          <Route exact path='/signIn' element={<LogIn />} />
-          <Route exact path='/summary' element={<Summaries />} />
-          <Route exact path='/summary/:id' element={<TextEditor />} />
-          <Route exact path='/FlashCards' element={<CardFolders />} />
-          <Route exact path='/FlashCards/CardGroup/:id' element={<FlashCards />} />
-        
-        </Routes>
+                    <Route exact path='/' element={ <Home />} />
+                    <Route exact path='/signIn' element={<LogIn />} />
+                    <Route exact path='/summary' element={<Summaries />} />
+                    <Route exact path='/summary/:id' element={<TextEditor />} />
+                    <Route exact path='/FlashCards' element={<CardFolders />} />
+                    <Route exact path='/FlashCards/CardGroup/:id' element={<FlashCards />} />
+                    
+                </Routes>
 
 
-      </div>
+            </div>
 
-    </AuthProvider>
-  );
+        </AuthProvider>
+    );
 }
 
 export default App;

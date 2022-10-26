@@ -8,7 +8,7 @@ import FormCard from './FormCard'
 import FormSvg from '../../images/undraw_notes_re_pxhw.svg'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
-import { getFlashCards } from '../../actions'
+import { getFlashCards } from '../../redux/actions'
 
 export default function Cards(){
 

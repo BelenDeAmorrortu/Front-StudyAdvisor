@@ -3,13 +3,13 @@ import style from '../../StyleSheets/Home/Feature.module.scss'
 
 export default function Feature({name, icon}) {
 
-  return (
+    return (
 
-    <div className={style.feature_container}>
+        <div className={style.feature_container}>
 
-      <h4>{name}</h4>
-      {icon}
-      
-    </div>
-  )
+            <h4>{name}</h4>
+            {icon}
+        
+        </div>
+    )
 }

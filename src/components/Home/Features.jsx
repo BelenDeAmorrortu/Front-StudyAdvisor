@@ -5,25 +5,26 @@ import style from '../../StyleSheets/Home/Features.module.scss'
 import { NavLink } from 'react-router-dom'
 
 export default function Features() {
-  return (
+    
+    return (
 
-    <div className={style.features}>
+        <div className={style.features}>
 
-      <Feature name='Calendar' icon={<LordIcon src='https://cdn.lordicon.com/uutnmngi.json' />} />
+            <Feature name='Calendar' icon={<LordIcon src='https://cdn.lordicon.com/uutnmngi.json' />} />
 
-      <NavLink to='/summary' style={{textDecoration: 'none'}}>
+            <NavLink to='/summary' style={{textDecoration: 'none'}}>
 
-        <Feature name='Summary' icon={<LordIcon src='https://cdn.lordicon.com/hiqmdfkt.json'/>} />
+                <Feature name='Summary' icon={<LordIcon src='https://cdn.lordicon.com/hiqmdfkt.json'/>} />
 
-      </NavLink>
-      
-      <NavLink to='/FlashCards' style={{textDecoration: 'none'}} >
+            </NavLink>
+            
+            <NavLink to='/FlashCards' style={{textDecoration: 'none'}} >
 
-        <Feature name='Flash Cards' icon={<LordIcon src='https://cdn.lordicon.com/xhsumrcb.json'/>}/>
+                <Feature name='Flash Cards' icon={<LordIcon src='https://cdn.lordicon.com/xhsumrcb.json'/>}/>
 
-      </NavLink>
+            </NavLink>
 
 
-    </div>
-  )
+        </div>
+    )
 }

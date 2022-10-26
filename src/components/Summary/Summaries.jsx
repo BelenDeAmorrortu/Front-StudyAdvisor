@@ -4,7 +4,7 @@ import svgForm from '../../images/undraw_process_re_gws7.svg'
 import AddTemplate from "../Permanent/AddTemplate";
 import Form from "./Form";
 import { useDispatch, useSelector } from "react-redux";
-import { createSummary, getSummaries, deleteSummary} from "../../actions";
+import { createSummary, getSummaries, deleteSummary} from "../../redux/actions";
 import DocumentImg from '../../images/document-icon.png'
 import Card from "../Permanent/Card";
 

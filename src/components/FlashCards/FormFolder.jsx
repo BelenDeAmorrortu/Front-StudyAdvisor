@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { createNewCardGroup, getCardGroups } from '../../actions'
+import { createNewCardGroup, getCardGroups } from '../../redux/actions'
 import style from '../../StyleSheets/Summary/Form.module.scss'
 
 export default function Form({name, setName, setDisplay }) {
