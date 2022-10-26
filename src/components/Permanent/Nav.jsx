@@ -3,9 +3,13 @@ import style from '../../StyleSheets/Permanent/Nav.module.scss'
 import StudyAdvisorCompleteLogo from '../../images/complete logo.png'
 import NavMenuIcon from '../../images/NavOptionsIcon.png'
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import UserImg from '../../images/user.png'
 
 
 export default function Nav(){
+
+    const {currentUser} = useAuth()
 
     return(
 
@@ -14,16 +18,22 @@ export default function Nav(){
 
             <NavLink to='/'>
                 
-                <img src={StudyAdvisorCompleteLogo} alt="Study Advisor Logo" />
+                <img className={style.logo} src={StudyAdvisorCompleteLogo} alt="Study Advisor Logo" />
 
             </NavLink>
 
 
             <ul id="ul_not_responsive">
 
+                {currentUser ?
+
+                    <li><img src={currentUser.photoUrl ? currentUser.photoUrl : UserImg} /></li>
+
+                :
                 <NavLink to='/signIn' style={{textDecoration: 'none'}}>
-                    <li>My Account</li>
+                    <li>Sign In</li>
                 </NavLink>
+                }
 
             </ul>
 {/* 
