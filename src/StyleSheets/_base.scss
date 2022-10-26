@@ -1,0 +1,31 @@
+@import './Variables';
+
+.swal2-container .Alert{
+
+    background-color: #f5f5f5 ;
+    border: 5px solid;
+    border-image: linear-gradient(35deg, $purple,  $pink) 1;
+    outline: none;
+
+    .swal2-icon{
+
+        margin-top: 15px;
+    }
+    
+    .confirmButton{
+
+        background-color: $pink;
+    }
+    .denyButton{
+        background-color: transparent;
+        outline: 2px solid $pink;
+        color: $pink;
+    }
+    .closeButton{
+
+        background-color: transparent;
+        color: black;
+        font-size: 25px;
+
+    }
+}
