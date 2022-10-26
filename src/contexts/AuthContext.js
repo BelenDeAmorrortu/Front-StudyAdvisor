@@ -1,59 +1,396 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { auth } from '../firebase'
-import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
+import axios from 'axios'
+import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, signInWithRedirect, updateProfile, updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider, sendPasswordResetEmail, EmailAuthCredential, reauthenticateWithPopup } from 'firebase/auth'
+import { useDispatch } from 'react-redux'
+import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
+import { useNavigate } from 'react-router-dom'
 
 const AuthContext = React.createContext()
 
-export function useAuth(){
+export function useAuth() {
     return useContext(AuthContext)
 }
 
-export function AuthProvider({children}) {
+
+export function AuthProvider({ children }) {
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [currentUser, setCurrentUser] = useState()
+    const [loading, setLoading] = useState(true)
 
-    const auth = getAuth()
+    function signInWithGoogle() {
 
-    function signUp(email, password, username){
+        const provider = new GoogleAuthProvider();
 
-        createUserWithEmailAndPassword( auth, email, password)
-    
-        auth.onAuthStateChanged(user =>{
+        signInWithRedirect(auth, provider)
 
-            if(user){
-    
-                user.updateProfile({
+    }
+
+    async function signUp(email, password, username) {
+
+        createUserWithEmailAndPassword(auth, email, password)
+
+        onAuthStateChanged(auth, (user) => {
+
+            if (user) {
+
+                updateProfile(user, {
                     displayName: username
                 })
 
+                axios.post('https://pf-henry-back.herokuapp.com/user/register', { user: { ...user, displayName: username }, reservations: [] })
+
             }
         })
+
     }
 
-    useEffect(()=>{
+    function logIn(email, password) {
+        signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                navigate('/')
+            })
+            .catch(() => {
+                Swal.fire({
+                    text: 'Incorrect email or password, please try again',
+                    icon: 'error',
+                    iconColor: '#497aa6',
+                    showCloseButton: true,
+                    showDenyButton: false,
+                    confirmButtonText: 'Ok',
+                    allowEnterKey: false,
+                    customClass: {
+                        popup: 'Alert',
+                        closeButton: 'closeButton',
+                        confirmButton: 'confirmButton',
+                        denyButton: 'denyButton',
+                    }
+                })
+            })
+    }
 
-        const unsubscribe = auth.onAuthStateChanged( user => setCurrentUser(user))
-    
+    function logOut() {
+
+        return signOut(auth)
+    }
+
+    function changeUsername(currentUser) {
+
+        Swal.fire({
+
+            text: 'Please enter your new username',
+            showCloseButton: true,
+            showDenyButton: true,
+            denyButtonText: 'Cancel',
+            confirmButtonText: 'Submit',
+            input: 'text',
+            inputPlaceholder: 'New username',
+            allowEnterKey: false,
+            customClass: {
+                popup: 'Alert',
+                closeButton: 'closeButton',
+                confirmButton: 'confirmButton',
+                denyButton: 'denyButton',
+            }
+        })
+            .then((result) => {
+
+                const newUsername = result.value
+
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        text: 'Are you sure you want to change your username?',
+                        icon: 'question',
+                        iconColor: '#497aa6',
+                        showCloseButton: true,
+                        showDenyButton: false,
+                        confirmButtonText: 'Yes, I am sure',
+                        allowEnterKey: false,
+                        customClass: {
+                            popup: 'Alert',
+                            closeButton: 'closeButton',
+                            confirmButton: 'confirmButton',
+                            denyButton: 'denyButton',
+                        }
+                    })
+                        .then((result) => {
+
+                            if (result.isConfirmed) {
+
+                                if (newUsername.trim() !== '') {
+                                    updateProfile(currentUser, {
+                                        displayName: newUsername
+                                    })
+                                        .then(() => {
+
+                                            Swal.fire({
+                                                text: 'Username changed succesfully',
+                                                icon: 'success',
+                                                iconColor: '#497aa6',
+                                                showCloseButton: true,
+                                                showDenyButton: false,
+                                                confirmButtonText: 'Continue',
+                                                allowEnterKey: false,
+                                                customClass: {
+                                                    popup: 'Alert',
+                                                    closeButton: 'closeButton',
+                                                    confirmButton: 'confirmButton',
+                                                    denyButton: 'denyButton',
+                                                }
+                                            })
+                                                .then(() => {
+                                                    window.location.reload()
+                                                })
+
+                                        })
+                                        .catch((e) => {
+                                            console.log('erorrr', e)
+                                            Swal.fire({
+                                                text: 'An error occurred, please try again',
+                                                icon: 'error',
+                                                iconColor: '#497aa6',
+                                                showCloseButton: true,
+                                                showDenyButton: false,
+                                                confirmButtonText: 'Ok',
+                                                allowEnterKey: false,
+                                                customClass: {
+                                                    popup: 'Alert',
+                                                    closeButton: 'closeButton',
+                                                    confirmButton: 'confirmButton',
+                                                    denyButton: 'denyButton',
+                                                }
+                                            })
+                                        })
+                                }
+                            }
+                        })
+                }
+            })
+
+    }
+
+    function changePassword(currentUser) {
+
+        Swal.fire({
+
+            text: 'Please enter your current password',
+            showCloseButton: true,
+            showDenyButton: true,
+            denyButtonText: 'I forgot my password',
+            confirmButtonText: 'Submit',
+            input: 'password',
+            inputLabel: 'Password',
+            inputPlaceholder: 'Current Password',
+            allowEnterKey: false,
+            customClass: {
+                popup: 'Alert',
+                closeButton: 'closeButton',
+                confirmButton: 'confirmButton',
+                denyButton: 'denyButton',
+            }
+        })
+            .then((result) => {
+
+                if (result.isConfirmed) {
+
+                    if (result.value.trim() !== '') {
+
+                        let credential = EmailAuthProvider.credential(currentUser.email, result.value)
+                        reauthenticateWithCredential(currentUser, credential)
+                            .catch(e => {
+                                Swal.fire({
+                                    text: 'Incorrect Password',
+                                    icon: 'error',
+                                    iconColor: '#497aa6',
+                                    showCloseButton: true,
+                                    showDenyButton: false,
+                                    confirmButtonText: 'Ok',
+                                    allowEnterKey: false,
+                                    customClass: {
+                                        popup: 'Alert',
+                                        closeButton: 'closeButton',
+                                        confirmButton: 'confirmButton',
+                                        denyButton: 'denyButton',
+                                    }
+                                })
+                            })
+                        Swal.fire({
+                            text: 'Enter your new password',
+                            showCloseButton: true,
+                            showDenyButton: false,
+                            confirmButtonText: 'Change Password',
+                            input: 'password',
+                            inputLabel: 'Password',
+                            inputPlaceholder: 'New Password',
+                            allowEnterKey: false,
+                            customClass: {
+                                popup: 'Alert',
+                                closeButton: 'closeButton',
+                                confirmButton: 'confirmButton',
+                                denyButton: 'denyButton',
+                            }
+                        })
+                            .then(result => {
+
+                                if (result.isConfirmed) {
+
+                                    if (result.value.trim() !== '') {
+
+                                        updatePassword(currentUser, result.value)
+                                            .then(() => {
+                                                Swal.fire({
+                                                    text: 'Password updated successfully',
+                                                    icon: 'success',
+                                                    iconColor: '#497aa6',
+                                                    showCloseButton: true,
+                                                    showDenyButton: false,
+                                                    confirmButtonText: 'Continue',
+                                                    allowEnterKey: false,
+                                                    customClass: {
+                                                        popup: 'Alert',
+                                                        closeButton: 'closeButton',
+                                                        confirmButton: 'confirmButton',
+                                                        denyButton: 'denyButton',
+                                                    }
+                                                })
+                                            })
+                                            .catch(() => {
+                                                Swal.fire({
+                                                    text: 'An error occurred, please try again',
+                                                    icon: 'error',
+                                                    iconColor: '#497aa6',
+                                                    showCloseButton: true,
+                                                    showDenyButton: false,
+                                                    confirmButtonText: 'Ok',
+                                                    allowEnterKey: false,
+                                                    customClass: {
+                                                        popup: 'Alert',
+                                                        closeButton: 'closeButton',
+                                                        confirmButton: 'confirmButton',
+                                                        denyButton: 'denyButton',
+                                                    }
+                                                })
+                                            })
+                                    }
+                                }
+                            })
+                    }
+                }
+                if (result.isDenied) {
+                    Swal.fire({
+
+                        text: 'Did you forget your password ? Reset it',
+                        showCloseButton: true,
+                        showDenyButton: true,
+                        denyButtonText: 'Cancel',
+                        confirmButtonText: 'Send me a password reset email',
+                        allowEnterKey: false,
+                        customClass: {
+                            popup: 'Alert',
+                            closeButton: 'closeButton',
+                            confirmButton: 'confirmButton',
+                            denyButton: 'denyButton',
+                        }
+                    })
+                        .then(result => {
+
+                            if (result.isConfirmed) {
+                                sendPasswordResetEmail(auth, currentUser.email)
+                                Swal.fire({
+
+                                    text: 'Password reset email sent successfully',
+                                    showCloseButton: true,
+                                    showDenyButton: false,
+                                    confirmButtonText: 'Ok',
+                                    allowEnterKey: false,
+                                    customClass: {
+                                        popup: 'Alert',
+                                        closeButton: 'closeButton',
+                                        confirmButton: 'confirmButton',
+                                        denyButton: 'denyButton',
+                                    }
+                                })
+                            }
+                        })
+                }
+            })
+
+
+    }
+
+    function deleteAccount(currentUser) {
+
+        deleteUser(currentUser)
+            .then(() => {
+
+                Swal.fire({
+                    text: 'Account deleted succesfully',
+                    icon: 'success',
+                    iconColor: '#497aa6',
+                    showCloseButton: true,
+                    showDenyButton: false,
+                    confirmButtonText: 'Continue',
+                    allowEnterKey: false,
+                    customClass: {
+                        popup: 'Alert',
+                        closeButton: 'closeButton',
+                        confirmButton: 'confirmButton',
+                        denyButton: 'denyButton',
+                    }
+                })
+                navigate('/')
+
+            })
+            .catch(() => {
+                Swal.fire({
+                    text: 'An error occurred, please try again',
+                    icon: 'error',
+                    iconColor: '#497aa6',
+                    showCloseButton: true,
+                    showDenyButton: false,
+                    confirmButtonText: 'Ok',
+                    allowEnterKey: false,
+                    customClass: {
+                        popup: 'Alert',
+                        closeButton: 'closeButton',
+                        confirmButton: 'confirmButton',
+                        denyButton: 'denyButton',
+                    }
+                })
+            })
+
+    }
+
+    useEffect(() => {
+
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setCurrentUser(user)
+            setLoading(false)
+        })
+
         return unsubscribe
 
     }, [])
 
-    useEffect(()=>{
 
-        console.log(currentUser)
-
-    }, [currentUser])
-
-    
-    let value={
+    let value = {
         currentUser,
-        signUp
+        signUp,
+        logIn,
+        signInWithGoogle,
+        logOut,
+        changePassword,
+        changeUsername,
+        deleteAccount
     }
 
 
     return (
         <AuthContext.Provider value={value}>
-            {children}
+            {!loading && children}
         </AuthContext.Provider>
     )
 }
