@@ -16,9 +16,8 @@
 
         width: 15vw;
         height: 5.5vh;
-        border-radius: 10px;
         border: 2px solid;
-        border-image: linear-gradient(35deg, $purple,  $pink) 1;
+        border-image: $gradient 1;
         margin-right: 2vw;
         outline: none;
         font-size: 1vw;
@@ -38,7 +37,7 @@
         width: 5vw;
         position: static;
         border: none;
-        background: linear-gradient(35deg, $purple,  $pink);
+        background: $gradient;
         color: #f5f5f5;
 
         @media screen and (max-width: $phone) {

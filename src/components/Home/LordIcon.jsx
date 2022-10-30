@@ -12,7 +12,7 @@ export default function LordIcon({src}) {
 
                 trigger={Number(window.innerWidth) > 450 ? "loop-on-hover" : "loop"}
 
-                colors="primary:#6e44ff,secondary:#b33c86"
+                colors="primary:#B91372,secondary:#85C7DE"
 
                 state="loop"
 

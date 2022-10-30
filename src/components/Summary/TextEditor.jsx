@@ -9,7 +9,7 @@ let toolbarOptions = [
 
     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],  
     [{ 'font': [] }],
-    [{ 'color': [ '#42a2eb', '#6e44ff', '#b33c86', '#DC7F30', '#fff', '#000'] }, { 'background': ['#e3dae0', '#42a2eb', '#6e44ff', '#b33c86', '#DC7F30'] }],
+    [{ 'color': [ '#85C7DE', '#9A2CA0', '#B91372', '#F1E4E8', '#fff', '#000'] }, { 'background': ['#85C7DE', '#9A2CA0', '#B91372', '#F1E4E8'] }],
     ['bold', 'italic', 'underline'],     
     [{ 'align': [] }],
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],    

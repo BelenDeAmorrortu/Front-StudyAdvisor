@@ -1,5 +1,10 @@
 @import './Variables';
 
+body{
+    background-color: $background;
+    color: #f5f5f5;
+}
+
 .swal2-container .Alert{
 
     background-color: #f5f5f5 ;
