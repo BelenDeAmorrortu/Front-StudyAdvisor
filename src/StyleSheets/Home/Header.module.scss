@@ -106,8 +106,17 @@
         bottom: 0;
         width: 100vw;
 
-        path{
-            fill: $background;
+        & path{
+            transition: 0.5s linear;
+        }
+
+        &.dark path{
+            fill: $dark-background;
+        }
+
+        &.light path{
+            fill: $light-background;
+
         }
         
         @media screen and (max-width: $phone) {

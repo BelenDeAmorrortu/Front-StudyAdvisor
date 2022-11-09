@@ -1,15 +1,22 @@
 @import './Variables';
 
-body{
-    background-color: $background;
-    color: #f5f5f5;
+button{
+    cursor: pointer;
+    transition: transform 0.2s linear;
+
+    &:hover{
+        transform: scale(1.03);
+    }
+    &:disabled{
+        cursor: not-allowed;
+    }
 }
 
 .swal2-container .Alert{
 
     background-color: #f5f5f5 ;
     border: 5px solid;
-    border-image: linear-gradient(35deg, $purple,  $pink) 1;
+    border-image: $dark-gradient 1;
     outline: none;
 
     .swal2-icon{

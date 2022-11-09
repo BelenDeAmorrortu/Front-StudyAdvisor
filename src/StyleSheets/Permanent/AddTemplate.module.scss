@@ -49,9 +49,9 @@
     
         width: 70vw;
         min-height: 30vw;
-        background-color:  $background;
+        background-color:  $dark-background;
         border: 5px solid;
-        border-image: $gradient 1;
+        border-image: $dark-gradient 1;
         box-shadow: 0 0 100vw 0 rgba(0, 0, 0, 0.5);
         z-index: 10;
         

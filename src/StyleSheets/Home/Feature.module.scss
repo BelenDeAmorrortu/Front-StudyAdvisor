@@ -11,7 +11,7 @@
 
     box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.2);
     border: 3px solid;
-    border-image: $gradient 1;
+    border-image: $dark-gradient 1;
     // border-radius: 10px;
     margin: 3vw;
     display: flex;
@@ -40,7 +40,7 @@
 
     h4{
 
-        background-image: $gradient;
+        background-image: $dark-gradient;
         background-clip: text;
         font-size: 2vw ;
         color: transparent;

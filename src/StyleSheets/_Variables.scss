@@ -12,20 +12,25 @@ $light-blue: #85C7DE;
 $purple:  #9A2CA0;
 $pink: #B91372;
 $orange: #B91372;
-// $cream: #e3dae0;
 $cream: #F1E4E8;
-$background: #212738;
-$glass: #f5f5f51e;
-$gradient: linear-gradient(35deg, $light-blue,  $pink);
 
-$light-blue-hover: #42a2eb9d;
-$purple-hover:  #6e44ff9d;
-$pink-hover: #b33c869d;
-$orange-hover: #DC7F309d;
+$light-blue-hover: #85C7DE9d;
+$purple-hover:  #9A2CA09d;
+$pink-hover: #B913729d;
+$orange-hover: #B913729d;
 $orange-hover-dark: #de7417;
-// $cream-hover: #e3dae09d;
-$cream-hover-light: #f5f2f375;
-$cream-hover-dark: #e4dddd;
+$cream-hover-light: #F1E4E875;
+$cream-hover-dark: #e4d8dc;
+
+// Themes ------------------------------------------
+
+$dark-background: #212738;
+$dark-glass: #f5f5f51e;
+$dark-gradient: linear-gradient(35deg, $light-blue,  $pink);
+
+$light-background: #fff;
+$light-glass: #21273823;
+$light-gradient: linear-gradient(35deg, $purple,  $light-blue);
 
 
 // Media Queries ----------------------------------
