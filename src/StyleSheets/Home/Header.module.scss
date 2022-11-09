@@ -107,7 +107,7 @@
         width: 100vw;
 
         & path{
-            transition: 0.5s linear;
+            transition: fill 0.5s linear;
         }
 
         &.dark path{

@@ -14,8 +14,17 @@ export function ThemeProvider({ children }) {
 
     const [currentTheme, setCurrentTheme] = useState('dark')
 
+    useEffect(()=>{
+
+        document.body.classList.add(currentTheme)
+
+    }, [currentTheme])
+
     function switchTheme(){
+
+        document.body.classList.remove(currentTheme)
         currentTheme === 'dark' ? setCurrentTheme('light') : setCurrentTheme('dark')
+    
     }
 
     let value = {
