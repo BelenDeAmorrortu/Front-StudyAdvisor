@@ -5,10 +5,12 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { useTheme } from "../../contexts/ThemeContext";
 
 export default function Header(){
 
     const {currentUser} = useAuth()
+    const {currentTheme} = useTheme()
 
     useEffect(()=>{
         AOS.init({duration: 1000})
@@ -39,7 +41,7 @@ export default function Header(){
 
             </div>
 
-            <div className={style.wave} style={{height: '150px', overflow: 'hidden'}} ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style={{height: '100%', width: '100%'}}><path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style={{stroke: 'none'}}></path></svg></div>
+            <div className={`${style.wave} ${style[currentTheme]}`} style={{height: '150px', overflow: 'hidden'}} ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style={{height: '100%', width: '100%'}}><path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style={{stroke: 'none'}}></path></svg></div>
 
         </div>
     )

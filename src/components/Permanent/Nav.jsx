@@ -5,11 +5,15 @@ import NavMenuIcon from '../../images/NavOptionsIcon.png'
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import UserImg from '../../images/user.png'
+import { useTheme } from "../../contexts/ThemeContext";
+import lightIcon from '../../images/light-icon.svg'
+import darkIcon from '../../images/dark-icon.svg'
 
 
 export default function Nav(){
 
     const {currentUser} = useAuth()
+    const {switchTheme, currentTheme} = useTheme()
 
     return(
 
@@ -23,7 +27,7 @@ export default function Nav(){
             </NavLink>
 
 
-            <ul id="ul_not_responsive">
+            <ul>
 
                 {currentUser ?
 
@@ -35,27 +39,9 @@ export default function Nav(){
                 </NavLink>
                 }
 
+                <li onClick={()=> switchTheme()}><img src={currentTheme === 'dark' ? lightIcon : darkIcon} /></li>
+
             </ul>
-{/* 
-            <div id="div_ul_responsive" className="closed">
-
-                <ul id="ul_responsive">
-
-                    <li> <a href="">Inicio </a></li>
-
-                    <li> <a href=""> Mi Cuenta </a></li>
-
-                    <li> <a href=""> Calendario </a></li>
-                    
-
-
-                </ul>
-
-            </div>    */}
-
-            {/* <div id="nav_options_icon">
-                <img src={NavMenuIcon} alt="Menu Icon" />
-            </div> */}
 
         </nav>
 
