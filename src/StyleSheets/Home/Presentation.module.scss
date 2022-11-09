@@ -62,10 +62,6 @@
             font-weight: $text-weight;
 
             span{
-                // background-image: linear-gradient(35deg, #6e44ff,#b33c86);
-                // background-clip: text;
-                // -webkit-background-clip: text;
-                // color: transparent;
                 color: $pink;
                 font-weight: bold;
             }
@@ -90,32 +86,36 @@
             font-family: $subheading-font;
             font-weight: $subheading-weight;
             font-size: 5vh;
-            background-image: $gradient;
             background-clip: text;
             -webkit-background-clip: text;
+            background-image: $dark-gradient;
             color: transparent;
         }
         
     }
 
-    .img_container img{
+    .img_container{
 
-        width: 32vw;
-        margin: 0 auto;
-        padding: 0;
+        svg, img{
 
-        @media screen and (max-width: $phone) {
-
-            width: 70vw;
+            width: 32vw;
+            margin: 0 auto;
+            padding: 0;
+    
+            @media screen and (max-width: $phone) {
+    
+                width: 70vw;
+                
+            }
+    
             
+            @media screen and (max-width: $mid-screen) {
+    
+                width: 60vw;
+                
+            }
         }
 
-        
-        @media screen and (max-width: $mid-screen) {
-
-            width: 60vw;
-            
-        }
     }
 
 
