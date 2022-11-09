@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
+import { useTheme } from '../../contexts/ThemeContext'
 import style from '../../StyleSheets/Permanent/AddTemplate.module.scss'
 
 export default function AddTemplate({ elementName, formImg, addForm, resetFormState, initialFormState, setDisplay, display}) {
     
+    const {currentTheme} = useTheme()
+
     function showForm(){
 
         setDisplay('flex')
@@ -25,7 +28,7 @@ export default function AddTemplate({ elementName, formImg, addForm, resetFormSt
 
             </div>
 
-            <div className={style.new_element_form} style={{display: display}} >
+            <div className={`${style.new_element_form} ${style[currentTheme]}`} style={{display: display}} >
 
                 <img src={formImg} />
 
