@@ -34,17 +34,22 @@
         flex-direction: column;
         justify-content: center;
         align-content: center;
-    
-        background-color: rgba(255, 255, 255, 0.121);
         border: 2px solid $purple;
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); 
-        // border-radius: 8px;
         min-height: fit-content;
         min-width: fit-content;
         width: 10vw;
         height: 10vw;
         padding: 2vw;
         transition: all 0.2s linear;
+
+        &.dark{
+            background-color: $dark-glass;
+        }
+
+        &.light{
+            background-color: $light-glass;
+        }
 
         @media screen and (max-width: $phone) {
             
