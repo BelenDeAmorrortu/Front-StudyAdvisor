@@ -8,7 +8,7 @@ import FormSvg from '../../images/undraw_my_files_swob.svg'
 import { useEffect } from 'react'
 import { getCardGroups, deleteCardGroup } from '../../redux/actions'
 import Card from '../Permanent/Card'
-import folderPng from '../../images/folder.png'
+import folderPng from '../../images/folder.svg'
 
 export default function CardFolders() {
 

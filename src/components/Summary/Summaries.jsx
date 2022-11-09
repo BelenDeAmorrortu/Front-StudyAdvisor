@@ -5,7 +5,7 @@ import AddTemplate from "../Permanent/AddTemplate";
 import Form from "./Form";
 import { useDispatch, useSelector } from "react-redux";
 import { createSummary, getSummaries, deleteSummary} from "../../redux/actions";
-import DocumentImg from '../../images/document-icon.png'
+import DocumentImg from '../../images/document-icon.svg'
 import Card from "../Permanent/Card";
 
 export default function Summaries() {
