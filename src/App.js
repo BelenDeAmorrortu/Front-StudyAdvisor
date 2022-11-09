@@ -8,32 +8,29 @@ import TextEditor from './components/Summary/TextEditor';
 import LogIn from './components/Account/LogIn';
 import CardFolders from './components/FlashCards/CardFolders';
 import FlashCards from './components/FlashCards/FlashCards';
-import { AuthProvider } from './contexts/AuthContext';
+import { useTheme } from './contexts/ThemeContext';
 
 function App() {
-    
+
+    const {currentTheme} = useTheme()
+
     return (
+        <div className={`App ${currentTheme}`}>
+            
+            <Nav />
+            <Routes>
 
-        <AuthProvider>
-        
-            <div className="App">
+                <Route exact path='/' element={ <Home />} />
+                <Route exact path='/signIn' element={<LogIn />} />
+                <Route exact path='/summary' element={<Summaries />} />
+                <Route exact path='/summary/:id' element={<TextEditor />} />
+                <Route exact path='/FlashCards' element={<CardFolders />} />
+                <Route exact path='/FlashCards/CardGroup/:id' element={<FlashCards />} />
                 
-                <Nav />
-                <Routes>
-
-                    <Route exact path='/' element={ <Home />} />
-                    <Route exact path='/signIn' element={<LogIn />} />
-                    <Route exact path='/summary' element={<Summaries />} />
-                    <Route exact path='/summary/:id' element={<TextEditor />} />
-                    <Route exact path='/FlashCards' element={<CardFolders />} />
-                    <Route exact path='/FlashCards/CardGroup/:id' element={<FlashCards />} />
-                    
-                </Routes>
+            </Routes>
 
 
-            </div>
-
-        </AuthProvider>
+        </div>
     );
 }
 
