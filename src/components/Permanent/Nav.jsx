@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import style from '../../StyleSheets/Permanent/Nav.module.scss'
 import StudyAdvisorCompleteLogo from '../../images/complete logo.png'
 import NavMenuIcon from '../../images/NavOptionsIcon.png'
@@ -12,8 +12,18 @@ import darkIcon from '../../images/dark-icon.svg'
 
 export default function Nav(){
 
-    const {currentUser} = useAuth()
+    const {currentUser, logOut} = useAuth()
     const {switchTheme, currentTheme} = useTheme()
+
+    console.log(currentUser)
+
+    const [display, setDisplay] = useState('translateX(150%)')
+
+    function handleLogOut(){
+
+        logOut()
+        setDisplay('translateX(150%)')
+    }
 
     return(
 
@@ -27,12 +37,13 @@ export default function Nav(){
             </NavLink>
 
 
-            <ul>
+            <ul style={{flexDirection: currentUser ? 'row-reverse' : 'row'}}>
 
                 {currentUser ?
 
-                    <li><img src={currentUser.photoUrl ? currentUser.photoUrl : UserImg} /></li>
-
+                    <>
+                    <li onClick={()=> setDisplay(display === 'translateX(0%)' ? 'translateX(150%)' : 'translateX(0%)')}><img src={currentUser.photoURL ? currentUser.photoURL : UserImg} /></li>
+                    </>
                 :
                 <NavLink to='/signIn' style={{textDecoration: 'none'}}>
                     <li>Sign In</li>
@@ -42,6 +53,17 @@ export default function Nav(){
                 <li onClick={()=> switchTheme()}><img src={currentTheme === 'dark' ? lightIcon : darkIcon} /></li>
 
             </ul>
+
+            <div className={style.sideBar} style={{transform: display}}>
+                <h3>{currentUser ? currentUser.displayName : null}</h3>
+                <NavLink to='/summary'onClick={()=> setDisplay('none')}>
+                    <p>My Summaries</p>
+                </NavLink>
+                <NavLink to='/FlashCards' onClick={()=> setDisplay('none')}>
+                    <p>My Flash Cards</p>
+                </NavLink>
+                <button onClick={handleLogOut}>Log Out</button>
+            </div>
 
         </nav>
 
