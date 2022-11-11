@@ -56,10 +56,10 @@ export default function Nav(){
 
             <div className={style.sideBar} style={{transform: display}}>
                 <h3>{currentUser ? currentUser.displayName : null}</h3>
-                <NavLink to='/summary'onClick={()=> setDisplay('none')}>
+                <NavLink to='/summary'onClick={()=> setDisplay('translateX(150%)')}>
                     <p>My Summaries</p>
                 </NavLink>
-                <NavLink to='/FlashCards' onClick={()=> setDisplay('none')}>
+                <NavLink to='/FlashCards' onClick={()=> setDisplay('translateX(150%)')}>
                     <p>My Flash Cards</p>
                 </NavLink>
                 <button onClick={handleLogOut}>Log Out</button>
