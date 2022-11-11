@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { auth } from '../firebase'
 import axios from 'axios'
-import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, signInWithRedirect, updateProfile, updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider, sendPasswordResetEmail, EmailAuthCredential, reauthenticateWithPopup } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, signInWithRedirect, updateProfile, updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider, sendPasswordResetEmail, EmailAuthCredential, reauthenticateWithPopup, signInWithPopup } from 'firebase/auth'
 import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2/dist/sweetalert2.all.min.js'
 import { useNavigate } from 'react-router-dom'
+import { useTheme } from './ThemeContext'
 
 const AuthContext = React.createContext()
 
@@ -12,8 +13,9 @@ export function useAuth() {
     return useContext(AuthContext)
 }
 
-
 export function AuthProvider({ children }) {
+
+    const { currentTheme } = useTheme()
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -25,7 +27,8 @@ export function AuthProvider({ children }) {
 
         const provider = new GoogleAuthProvider();
 
-        signInWithRedirect(auth, provider)
+        signInWithPopup(auth, provider)
+        .then(() => navigate('/'))
 
     }
 
@@ -40,41 +43,58 @@ export function AuthProvider({ children }) {
                 updateProfile(user, {
                     displayName: username
                 })
-
-                axios.post('https://pf-henry-back.herokuapp.com/user/register', { user: { ...user, displayName: username }, reservations: [] })
-
             }
         })
+
+        navigate('/')
 
     }
 
     function logIn(email, password) {
+
         signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
-                navigate('/')
+
+        .then(() => {
+            navigate('/')
+        })
+        .catch(() => {
+            Swal.fire({
+                text: 'Incorrect email or password, please try again',
+                icon: 'error',
+                iconColor: '#85C7DE',
+                showCloseButton: true,
+                showDenyButton: false,
+                confirmButtonText: 'Ok',
+                allowEnterKey: false,
+                customClass: {
+                    popup: `Alert ${currentTheme}`,
+                    closeButton: 'closeButton',
+                    confirmButton: 'confirmButton',
+                    denyButton: 'denyButton',
+                }
             })
-            .catch(() => {
-                Swal.fire({
-                    text: 'Incorrect email or password, please try again',
-                    icon: 'error',
-                    iconColor: '#497aa6',
-                    showCloseButton: true,
-                    showDenyButton: false,
-                    confirmButtonText: 'Ok',
-                    allowEnterKey: false,
-                    customClass: {
-                        popup: 'Alert',
-                        closeButton: 'closeButton',
-                        confirmButton: 'confirmButton',
-                        denyButton: 'denyButton',
-                    }
-                })
-            })
+        })
     }
 
     function logOut() {
 
-        return signOut(auth)
+        Swal.fire({
+
+            text: 'Are you sure you want to log out?',
+            icon: 'question',
+            showCloseButton: true,
+            showDenyButton: true,
+            denyButtonText: 'No, stay logged in',
+            confirmButtonText: 'Yes, I am sure',
+            allowEnterKey: false,
+            customClass: {
+                popup: `Alert ${currentTheme}`,
+                closeButton: 'closeButton',
+                confirmButton: 'confirmButton',
+                denyButton: 'denyButton',
+            }
+        })
+        .then( result => result.isConfirmed ? signOut(auth) : navigate('/') )
     }
 
     function changeUsername(currentUser) {
@@ -90,7 +110,7 @@ export function AuthProvider({ children }) {
             inputPlaceholder: 'New username',
             allowEnterKey: false,
             customClass: {
-                popup: 'Alert',
+                popup: `Alert ${currentTheme}`,
                 closeButton: 'closeButton',
                 confirmButton: 'confirmButton',
                 denyButton: 'denyButton',
@@ -104,13 +124,13 @@ export function AuthProvider({ children }) {
                     Swal.fire({
                         text: 'Are you sure you want to change your username?',
                         icon: 'question',
-                        iconColor: '#497aa6',
+                        iconColor: '#85C7DE',
                         showCloseButton: true,
                         showDenyButton: false,
                         confirmButtonText: 'Yes, I am sure',
                         allowEnterKey: false,
                         customClass: {
-                            popup: 'Alert',
+                            popup: `Alert ${currentTheme}`,
                             closeButton: 'closeButton',
                             confirmButton: 'confirmButton',
                             denyButton: 'denyButton',
@@ -129,21 +149,21 @@ export function AuthProvider({ children }) {
                                             Swal.fire({
                                                 text: 'Username changed succesfully',
                                                 icon: 'success',
-                                                iconColor: '#497aa6',
+                                                iconColor: '#85C7DE',
                                                 showCloseButton: true,
                                                 showDenyButton: false,
                                                 confirmButtonText: 'Continue',
                                                 allowEnterKey: false,
                                                 customClass: {
-                                                    popup: 'Alert',
+                                                    popup: `Alert ${currentTheme}`,
                                                     closeButton: 'closeButton',
                                                     confirmButton: 'confirmButton',
                                                     denyButton: 'denyButton',
                                                 }
                                             })
-                                                .then(() => {
-                                                    window.location.reload()
-                                                })
+                                            .then(() => {
+                                                window.location.reload()
+                                            })
 
                                         })
                                         .catch((e) => {
@@ -151,13 +171,13 @@ export function AuthProvider({ children }) {
                                             Swal.fire({
                                                 text: 'An error occurred, please try again',
                                                 icon: 'error',
-                                                iconColor: '#497aa6',
+                                                iconColor: '#85C7DE',
                                                 showCloseButton: true,
                                                 showDenyButton: false,
                                                 confirmButtonText: 'Ok',
                                                 allowEnterKey: false,
                                                 customClass: {
-                                                    popup: 'Alert',
+                                                    popup: `Alert ${currentTheme}`,
                                                     closeButton: 'closeButton',
                                                     confirmButton: 'confirmButton',
                                                     denyButton: 'denyButton',
@@ -186,7 +206,7 @@ export function AuthProvider({ children }) {
             inputPlaceholder: 'Current Password',
             allowEnterKey: false,
             customClass: {
-                popup: 'Alert',
+                popup: `Alert ${currentTheme}`,
                 closeButton: 'closeButton',
                 confirmButton: 'confirmButton',
                 denyButton: 'denyButton',
@@ -204,13 +224,13 @@ export function AuthProvider({ children }) {
                                 Swal.fire({
                                     text: 'Incorrect Password',
                                     icon: 'error',
-                                    iconColor: '#497aa6',
+                                    iconColor: '#85C7DE',
                                     showCloseButton: true,
                                     showDenyButton: false,
                                     confirmButtonText: 'Ok',
                                     allowEnterKey: false,
                                     customClass: {
-                                        popup: 'Alert',
+                                        popup: `Alert ${currentTheme}`,
                                         closeButton: 'closeButton',
                                         confirmButton: 'confirmButton',
                                         denyButton: 'denyButton',
@@ -227,7 +247,7 @@ export function AuthProvider({ children }) {
                             inputPlaceholder: 'New Password',
                             allowEnterKey: false,
                             customClass: {
-                                popup: 'Alert',
+                                popup: `Alert ${currentTheme}`,
                                 closeButton: 'closeButton',
                                 confirmButton: 'confirmButton',
                                 denyButton: 'denyButton',
@@ -244,13 +264,13 @@ export function AuthProvider({ children }) {
                                                 Swal.fire({
                                                     text: 'Password updated successfully',
                                                     icon: 'success',
-                                                    iconColor: '#497aa6',
+                                                    iconColor: '#85C7DE',
                                                     showCloseButton: true,
                                                     showDenyButton: false,
                                                     confirmButtonText: 'Continue',
                                                     allowEnterKey: false,
                                                     customClass: {
-                                                        popup: 'Alert',
+                                                        popup: `Alert ${currentTheme}`,
                                                         closeButton: 'closeButton',
                                                         confirmButton: 'confirmButton',
                                                         denyButton: 'denyButton',
@@ -261,13 +281,13 @@ export function AuthProvider({ children }) {
                                                 Swal.fire({
                                                     text: 'An error occurred, please try again',
                                                     icon: 'error',
-                                                    iconColor: '#497aa6',
+                                                    iconColor: '#85C7DE',
                                                     showCloseButton: true,
                                                     showDenyButton: false,
                                                     confirmButtonText: 'Ok',
                                                     allowEnterKey: false,
                                                     customClass: {
-                                                        popup: 'Alert',
+                                                        popup: `Alert ${currentTheme}`,
                                                         closeButton: 'closeButton',
                                                         confirmButton: 'confirmButton',
                                                         denyButton: 'denyButton',
@@ -289,7 +309,7 @@ export function AuthProvider({ children }) {
                         confirmButtonText: 'Send me a password reset email',
                         allowEnterKey: false,
                         customClass: {
-                            popup: 'Alert',
+                            popup: `Alert ${currentTheme}`,
                             closeButton: 'closeButton',
                             confirmButton: 'confirmButton',
                             denyButton: 'denyButton',
@@ -307,7 +327,7 @@ export function AuthProvider({ children }) {
                                     confirmButtonText: 'Ok',
                                     allowEnterKey: false,
                                     customClass: {
-                                        popup: 'Alert',
+                                        popup: `Alert ${currentTheme}`,
                                         closeButton: 'closeButton',
                                         confirmButton: 'confirmButton',
                                         denyButton: 'denyButton',
@@ -329,13 +349,13 @@ export function AuthProvider({ children }) {
                 Swal.fire({
                     text: 'Account deleted succesfully',
                     icon: 'success',
-                    iconColor: '#497aa6',
+                    iconColor: '#85C7DE',
                     showCloseButton: true,
                     showDenyButton: false,
                     confirmButtonText: 'Continue',
                     allowEnterKey: false,
                     customClass: {
-                        popup: 'Alert',
+                        popup: `Alert ${currentTheme}`,
                         closeButton: 'closeButton',
                         confirmButton: 'confirmButton',
                         denyButton: 'denyButton',
@@ -348,13 +368,13 @@ export function AuthProvider({ children }) {
                 Swal.fire({
                     text: 'An error occurred, please try again',
                     icon: 'error',
-                    iconColor: '#497aa6',
+                    iconColor: '#85C7DE',
                     showCloseButton: true,
                     showDenyButton: false,
                     confirmButtonText: 'Ok',
                     allowEnterKey: false,
                     customClass: {
-                        popup: 'Alert',
+                        popup: `Alert ${currentTheme}`,
                         closeButton: 'closeButton',
                         confirmButton: 'confirmButton',
                         denyButton: 'denyButton',
