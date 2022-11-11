@@ -30,7 +30,7 @@ export default function Nav(){
         
         <nav className={style.nav}>
 
-            <NavLink to='/'>
+            <NavLink to='/' onClick={()=> setDisplay('translateX(150%)')}>
                 
                 <img className={style.logo} src={StudyAdvisorCompleteLogo} alt="Study Advisor Logo" />
 
