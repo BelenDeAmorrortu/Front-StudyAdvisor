@@ -27,8 +27,8 @@ export default function Header(){
                     <h1>Study Advisor</h1>
                     {!currentUser?
 
-                    <NavLink to='/signIn'>
-                        <button>Sign In</button>
+                    <NavLink to='/register'>
+                        <button>Sign Up</button>
                     </NavLink>
 
                     :null

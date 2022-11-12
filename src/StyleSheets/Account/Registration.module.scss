@@ -1,0 +1,106 @@
+@import '../Variables';
+@import '../Mixins';
+
+.form_container{
+
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    form {
+        width: 35vw;
+        height: fit-content;
+        margin-top: 5vh;
+    
+        @media screen and (max-width: $phone){
+        
+            width: 80%;
+            margin: 10%;
+        }
+    
+        h4{
+            text-align: center;
+            font-size: 30px;
+            margin-top: 0%;  
+        }
+    
+        .form_section{
+            margin-bottom: 5vh;
+            margin-top: 1vh;
+        }
+    
+        input{
+    
+            width: 98.5%;
+            height: 5vh;
+            border: none;
+            border-radius: 0px;
+            outline: none;
+            background-color: transparent;
+            border-bottom: $light-blue solid 3px;
+        }
+    
+        span{
+            color: $pink;
+            margin: 10px 0;
+            display: block;
+    
+        }
+
+        p{
+            width: 100%;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        &.light p{
+            font-weight: $subheading-weight;
+        }
+    
+        button{
+                            
+            width: 100%;
+            height: 5vh;
+            margin: 2vh 0;
+            border: none;
+            color: white;
+            border-radius: 0.7vh;
+            background-image: $dark-gradient;
+    
+        }
+    
+        .google_button{
+    
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background: $light-blue;
+            color: $dark-background;
+            font-weight: $subheading-weight;
+
+            svg{
+                margin: 0 10px;
+            }
+        }
+        
+        .logIn{
+
+            span{
+                display: inline;
+                font-weight: $subheading-weight;
+                transition: 0.2s linear;
+                cursor: pointer;
+                padding: 0 8px;
+
+                &:hover{
+                    color: $pink-hover;
+                }
+            }                
+            
+        }
+    }
+}

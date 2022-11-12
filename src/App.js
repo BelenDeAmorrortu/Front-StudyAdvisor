@@ -9,6 +9,7 @@ import LogIn from './components/Account/LogIn';
 import CardFolders from './components/FlashCards/CardFolders';
 import FlashCards from './components/FlashCards/FlashCards';
 import { useTheme } from './contexts/ThemeContext';
+import Registration from './components/Account/Registration';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
 
                 <Route exact path='/' element={ <Home />} />
                 <Route exact path='/signIn' element={<LogIn />} />
+                <Route exact path='/register' element={<Registration />} />
                 <Route exact path='/summary' element={<Summaries />} />
                 <Route exact path='/summary/:id' element={<TextEditor />} />
                 <Route exact path='/FlashCards' element={<CardFolders />} />
