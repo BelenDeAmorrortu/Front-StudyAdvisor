@@ -80,17 +80,27 @@
             margin-top: 0%;  
         }
 
+        .form_section{
+            margin-bottom: 5vh;
+            margin-top: 1vh;
+        }
+
         input{
 
             width: 98.5%;
             height: 5vh;
-            margin-bottom: 5vh;
-            margin-top: 2vh;
             border: none;
             border-radius: 0px;
             outline: none;
             background-color: transparent;
             border-bottom: $light-blue solid 3px;
+        }
+
+        span{
+            color: $pink;
+            margin: 10px 0;
+            display: block;
+
         }
 
         button{
@@ -105,17 +115,45 @@
 
         }
 
-        .register_button{
-
-            background: none;
-            font-weight: bold;
-            color: $pink;
-            border: 3px solid $pink;                
+        p{
+            width: 100%;
+            text-align: center;
+            padding: 0;
+            margin: 0;
         }
-    }
 
-    .registration{
+        &.light p{
+            font-weight: $subheading-weight;
+        }
+                
+        .google_button{
+    
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background: $light-blue;
+            color: $dark-background;
+            font-weight: $subheading-weight;
 
-        margin: 15vh 0;
+            svg{
+                margin: 0 10px;
+            }
+        }
+        
+        .register{
+
+            span{
+                display: inline;
+                font-weight: $subheading-weight;
+                transition: 0.2s linear;
+                cursor: pointer;
+                padding: 0 8px;
+
+                &:hover{
+                    color: $pink-hover;
+                }
+            }                
+        }
     }
 }

@@ -46,7 +46,7 @@ export default function Nav(){
                     </>
                 :
                 <NavLink to='/signIn' style={{textDecoration: 'none'}}>
-                    <li>Sign In</li>
+                    <li>Log In</li>
                 </NavLink>
                 }
 
