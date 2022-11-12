@@ -108,9 +108,6 @@
 
         & path{
             transition: fill 0.5s linear;
-        }
-
-        &.dark path{
             fill: $dark-background;
         }
 
