@@ -94,7 +94,12 @@ export function AuthProvider({ children }) {
                 denyButton: 'denyButton',
             }
         })
-        .then( result => result.isConfirmed ? signOut(auth) : navigate('/') )
+        .then( result =>{
+            if(result.isConfirmed){
+                signOut(auth) 
+                navigate('/')
+            }
+        })
     }
 
     function changeUsername(currentUser) {
