@@ -8,16 +8,19 @@ export function useTheme() {
 
 export function ThemeProvider({ children }) {
 
-    const [currentTheme, setCurrentTheme] = useState()
+    const [currentTheme, setCurrentTheme] = useState('dark')
 
     useEffect(()=>{
-        setCurrentTheme(JSON.parse(localStorage.getItem('theme')) !== undefined ? JSON.parse(sessionStorage.getItem('theme')) : 'dark')
+
+        setCurrentTheme(JSON.parse(sessionStorage.getItem('theme')) !== null ? JSON.parse(sessionStorage.getItem('theme')) : 'dark')
+
     }, [])
 
     useEffect(()=>{
 
-        document.body.classList.add(JSON.parse(sessionStorage.getItem("theme")))
-        
+        document.body.classList.add(JSON.parse(sessionStorage.getItem('theme')) !== null ? JSON.parse(sessionStorage.getItem('theme')) : 'dark')
+        sessionStorage.theme = JSON.stringify(currentTheme)
+
     }, [currentTheme])
 
     function switchTheme(){
