@@ -26,8 +26,10 @@ export default function TextEditor() {
 
     const {id: documentId} = useParams()
 
-    const [socket, setSocket] = useState()
-    const [quill, setQuill] = useState()
+    const [socket, setSocket] = useState() // save socket to access it
+    const [quill, setQuill] = useState()   // save quill to access it
+
+    // Socket connection --------------------------------------------------------------
 
     useEffect(()=>{
 
@@ -45,19 +47,9 @@ export default function TextEditor() {
 
     }, [])
 
-    useEffect(()=>{
+    // -------------------------------------------------------------------------------------------
 
-        if(!socket || !quill) return
-
-        const interval = setInterval(()=>{
-
-            socket.emit('save-document', quill.getContents())
-
-            return ()=> clearInterval(interval)
-
-        }, save_interval)
-
-    }, [socket, quill])
+    // Load Document -----------------------------------------------------------------------------
 
     useEffect(()=>{
 
@@ -73,39 +65,45 @@ export default function TextEditor() {
 
     }, [socket, quill, documentId])
 
+    // -------------------------------------------------------------------------------------------
+
     useEffect(()=>{
 
-        if(!socket || !quill) return 
+        if(!socket || !quill) return
 
-        const handler = (delta, oldDelta, source) =>{
+        // Save Document -------------------------------------------------------------------------
+        const interval = setInterval(()=>{
 
+            socket.emit('save-document', quill.getContents())
+
+            return ()=> clearInterval(interval)
+
+        }, save_interval)
+
+        // Send User Text Change To Server --------------------------------------------------------
+
+        const sendChangeHandler = (delta, oldDelta, source) =>{ // delta --> only the changes made
+            //                                                     source --> who made the changes
             if(source !== 'user') return
             socket.emit('send-changes', delta)
         }
 
-        quill.on('text-change', handler)
+        quill.on('text-change', sendChangeHandler)
 
-        return ()=>{
-            quill.off('text-change', handler)
-        }
+        // Receive Changes From Server ----------------------------------------------------------
 
-    }, [socket, quill])
-
-    useEffect(()=>{
-
-        if(!socket || !quill) return 
-
-        const handler = (delta) =>{
+        const receiveChangesHandler = (delta) =>{
 
             quill.updateContents(delta)
         }
 
-        socket.on('receive-changes', handler)
+        socket.on('receive-changes', receiveChangesHandler)
 
         return ()=>{
-            socket.off('receive-changes', handler)
+            quill.off('text-change', sendChangeHandler)
+            socket.off('receive-changes', receiveChangesHandler)
         }
-        
+
     }, [socket, quill])
 
     const wrapperRef = useCallback((wrapper)=>{

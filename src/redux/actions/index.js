@@ -113,14 +113,14 @@ export function deleteFlashCard(id){
 
 }
 
-export function getSummaries(){
+export function getSummaries(userId){
 
     return async(dispatch)=>{
 
         try{
            
-            const summaries = await axios.get('http://localhost:3003/Summary')
-           
+            const summaries = await axios.get(`http://localhost:3003/Summary/${userId}`)
+
             return dispatch({type: 'GET_SUMMARIES', payload: summaries.data})
         }
 
@@ -132,13 +132,13 @@ export function getSummaries(){
     }
 }
 
-export function createSummary(name){
+export function createSummary(summary){
 
     return async(dispatch)=>{
 
         try{
            
-            const newSummary = await axios.post(`http://localhost:3003/Summary?name=${name}`)
+            await axios.post(`http://localhost:3003/Summary`, summary)
            
             return dispatch({type: 'CREATE_SUMMARY'})
         }
@@ -151,12 +151,12 @@ export function createSummary(name){
     }
 }
 
-export function deleteSummary(id){
+export function deleteSummary(summaryId){
 
     return async(dispatch)=>{
 
         try{
-            const deleteSummary = await axios.delete(`http://localhost:3003/Summary/${id}`)
+            await axios.delete(`http://localhost:3003/Summary/${summaryId}`)
         
             return dispatch({type: 'DELETE_SUMMARY'})
         }
