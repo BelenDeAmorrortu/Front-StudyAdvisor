@@ -7,8 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { createSummary, getSummaries, deleteSummary} from "../../redux/actions";
 import DocumentImg from '../../images/document-icon.svg'
 import Card from "../Permanent/Card";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Summaries() {
+
+    const { currentUser } = useAuth()
 
     const dispatch = useDispatch()
     const summaries = useSelector(state => state.summaries)
@@ -19,16 +22,17 @@ export default function Summaries() {
     useEffect(()=>{
 
         window.scrollTo(0,0)
-        dispatch(getSummaries())
+        // dispatch(getSummaries())
+        if(currentUser) dispatch(getSummaries(currentUser.uid))
 
     }, [])
 
     function handleOnClick(name){
 
-        dispatch(createSummary(name))
+        dispatch(createSummary({name, userId: currentUser.uid}))
         setDisplay('none')
         setName('')
-        dispatch(getSummaries())
+        dispatch(getSummaries(currentUser.uid))
     }
 
     function handleDelete(id){
@@ -36,6 +40,8 @@ export default function Summaries() {
         dispatch(deleteSummary(id))
         setInterval(()=>{
             dispatch(getSummaries())
+            // dispatch(getSummaries(currentUser.uid))
+
         }, 100)
     }
 
